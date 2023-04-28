@@ -4,14 +4,21 @@ using UnityEngine;
 
 public class Clock : MonoBehaviour
 {
-
-    public GameObject minuteHand, hourHand;
+    public Transform initialPos;
+    private GameObject minuteHand, hourHand;
+    public GameObject[] hourHandList, minuteHandList;
     private int minutes;
-    
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        print(initialPos.eulerAngles);
+        int n = Random.Range(0, hourHandList.Length);
+        hourHand = Instantiate(hourHandList[n], initialPos.position, Quaternion.Euler(initialPos.eulerAngles));
+        minuteHand = Instantiate(minuteHandList[n], initialPos.position, Quaternion.Euler(initialPos.eulerAngles));
+        hourHand.transform.parent = initialPos;
+        minuteHand.transform.parent = initialPos;
+    
     }
 
     // Update is called once per frame
