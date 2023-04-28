@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 using UnityEngine;
 
 public class ClockSpawner : MonoBehaviour
@@ -8,13 +9,15 @@ public class ClockSpawner : MonoBehaviour
     public GameObject ClockPrefab;
     public MeshRenderer SpawnArea;
     public int NumberOfSpawn;
-    private float spawnCollisionCheckRadius = 1f;
 
+    PlayClockSpawnAudio playClockSpawnAudio;
+    public AudioSource SpawnSound;
+
+    private float spawnCollisionCheckRadius = 1f;
     private int spawnNbOfRetries = 3;
     private float clockSpawnHeight = 1.5f;
     private Vector3 spawnSize, spawnCenter;
 
-    // Start is called before the first frame update
     void Start()
     {
         spawnCenter = SpawnArea.transform.position;
@@ -33,14 +36,14 @@ public class ClockSpawner : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.Space)){
+            SpawnClock();
+        }
     }
 
     private bool SpawnClock() {
-        print("wtf is my spawnSize" + spawnSize);
         Vector3 pos = spawnCenter + new Vector3(Random.Range(-spawnSize.x/2, spawnSize.x/2), clockSpawnHeight, Random.Range(-spawnSize.z/2, spawnSize.z/2));
         if(!Physics.CheckSphere(pos, spawnCollisionCheckRadius))
         {
